@@ -80,6 +80,7 @@ const Home = () => {
                             </Paragraph>
                           }
                         />
+                        <h6>Click on News for more details</h6>
                       </Card>
                     </Link>
                   </Col>

@@ -9,10 +9,10 @@ const Details = (props) => {
         <Col span={20}>
           <h2>Title: {props.location.state.article.title}</h2>
         </Col>
-        <Col span={20}>
+        <Col span={16}>
           <img
             src={props.location.state.article.urlToImage}
-            style={{ height: 200, width: "100%" }}
+            style={{ height: 400, width: "100%" }}
           />
         </Col>
         <Col span={20}>
