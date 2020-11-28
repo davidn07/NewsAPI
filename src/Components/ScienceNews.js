@@ -5,8 +5,8 @@ import { SearchOutlined } from "@ant-design/icons";
 import NewsContext from '../NewsContext/newsContext'
 import moment from 'moment'
 
-const Home = () => {
-  
+const ScienceNews = () => {
+
   const [search, setSearch] = useState([]);
 
   const { Meta } = Card;
@@ -15,19 +15,19 @@ const Home = () => {
   const newsContext = useContext(NewsContext)
 
 
-  const {getNews,articles, newsSearch} = newsContext;
+  const {articles, newsSearchScience, scienceNews} = newsContext;
 
  
   
   console.log(articles);
   useEffect(() => {
-    getNews()
-  }, [search]); 
+    scienceNews()
+  }, []); 
   return (
     <div>
-      
-      <Row justify='center' className='mb-5'>
-        <Col>
+       
+      <Row justify='center' className='mb-5' gutter={16}>
+        <Col >
           <Input
             placeholder='Search news here'
             style={{ width: "100%" }}
@@ -37,7 +37,7 @@ const Home = () => {
           />
         </Col>
         <Col >
-          <Button onClick={() => newsSearch(search)}>Search</Button>
+          <Button onClick={() => newsSearchScience(search)}>Search</Button>
         </Col>
       </Row>
       
@@ -87,11 +87,11 @@ const Home = () => {
                     </Link>
                   </Col>
                 );
-              }) : <Row justify='center' style={{marginTop:'100px'}}>
-                <Col>
-                <Spin size='large'/>
-                </Col>
-                </Row>}
+              }) :  <Row justify='center' style={{marginTop:'100px'}}>
+              <Col>
+              <Spin size='large'/>
+              </Col>
+              </Row>}
           </Row>
         </Col>
       </Row>
@@ -99,4 +99,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ScienceNews;

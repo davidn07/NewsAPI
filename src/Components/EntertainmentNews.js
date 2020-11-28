@@ -1,35 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Typography, Input } from "antd";
+import React, { useState, useEffect, useContext } from "react";
+import { Row, Col, Card, Typography, Input, Button, Spin} from "antd";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { SearchOutlined } from "@ant-design/icons";
+import NewsContext from '../NewsContext/newsContext'
+import moment from 'moment'
 
-const WallStreet = () => {
-  const [news, setNews] = useState([]);
-  const [search, setSearch] = useState("");
+const EntertainmentNews = () => {
+
+  const [search, setSearch] = useState([]);
 
   const { Meta } = Card;
   const { Paragraph } = Typography;
 
-  const fetchNews = async () => {
-    const res = await axios.get(
-      "http://newsapi.org/v2/everything?domains=wsj.com&apiKey=77092229e2a6465daafadb1f1b3dafb7"
-    );
-    console.log(res.data.articles);
-    setNews(res.data.articles);
-  };
-  const filteredNews =
-    news &&
-    news.filter((item) => {
-      return item.title.toLowerCase().includes(search.toLowerCase());
-    });
+  const newsContext = useContext(NewsContext)
+
+
+  const {articles, newsSearchEntairnment, entertainmentNews} = newsContext;
+
+ 
+  
+  console.log(articles);
   useEffect(() => {
-    fetchNews();
-  }, []);
+    entertainmentNews()
+  }, []); 
   return (
     <div>
+       
       <Row justify='center' className='mb-5'>
-        <Col span={16}>
+        <Col >
           <Input
             placeholder='Search news here'
             style={{ width: "100%" }}
@@ -38,12 +36,16 @@ const WallStreet = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
         </Col>
+        <Col>
+          <Button onClick={() => newsSearchEntairnment(search)}>Search</Button>
+        </Col>
       </Row>
+      
       <Row justify='center'>
         <Col span={20}>
           <Row gutter={[12, 12]} justify='center'>
-            {filteredNews &&
-              filteredNews.map((article, index) => {
+            {articles.length > 0 ?
+              articles.map((article, index) => {
                 return (
                   <Col
                     xs={{ span: 20 }}
@@ -59,9 +61,9 @@ const WallStreet = () => {
                         },
                       }}
                     >
-                      <Card
+                       <Card
                         hoverable
-                        style={{ width: 350, minHeight: "400px" }}
+                        style={{ width: 350, minHeight: "400px", padding: '5px' }}
                         cover={
                           <img
                             alt='example'
@@ -73,18 +75,23 @@ const WallStreet = () => {
                         <Meta
                           title={article.title}
                           description={
-                            <Paragraph ellipsis={{ rows: 5 }}>
+                            <Paragraph ellipsis={{ rows: 3 }} style={{height: '150px'}}>
                               {article.description}
                             </Paragraph>
                           }
                         />
-                                                <h6>Click on News for more details</h6>
-
+                        <span style={{height: '50px', margin: '5px'}}>Published At : {moment(article.publishedAt).format('MMMM Do YYYY, h:mm:ss a')}</span>
+                        <h6>Click on News for more details</h6>
+                        
                       </Card>
                     </Link>
                   </Col>
                 );
-              })}
+              }) : <Row justify='center' style={{marginTop:'100px'}}>
+              <Col>
+              <Spin size='large'/>
+              </Col>
+              </Row>}
           </Row>
         </Col>
       </Row>
@@ -92,4 +99,4 @@ const WallStreet = () => {
   );
 };
 
-export default WallStreet;
+export default EntertainmentNews;

@@ -1,30 +1,38 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Image, Typography, Space } from "antd";
+import moment from 'moment'
+import { Link } from "react-router-dom";
 
-const Details = (props) => {
-  console.log(props.location.state);
+const Details = ({location :{state :{article}}}) => {
+
+  const {Paragraph, Text} = Typography
   return (
     <div>
       <Row justify='center' gutter={[0, 16]}>
         <Col span={20}>
-          <h2>Title: {props.location.state.article.title}</h2>
+          <h2>Title: {article.title}</h2>
         </Col>
         <Col span={16}>
-          <img
-            src={props.location.state.article.urlToImage}
-            style={{ height: 400, width: "100%" }}
+          <Image
+            src={article.urlToImage}
+            
           />
         </Col>
         <Col span={20}>
-          <h3>{props.location.state.article.description}</h3>
+          <Space direction='vertical'>
+  <Text type='danger'>{moment(article.publishedAt).format('MMMM Do YYYY')}</Text>
+  
+          <h3>{article.description}</h3>
+  <Paragraph>{article.content}</Paragraph>
+  <a href={article.url}>Click Here To Know More</a>
+          </Space>
+          
         </Col>
-        <Col span={20}>
-          <h4>{props.location.state.article.content}</h4>
-        </Col>
+      
         <Col span={20}>
           <Row justify='end'>
             <Col>
-              <h6>- {props.location.state.article.source.name}</h6>
+            <Text type='warning'>{article.source.name}</Text>
             </Col>
           </Row>
         </Col>  
