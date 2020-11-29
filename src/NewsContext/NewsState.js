@@ -1,4 +1,4 @@
-import react, {useReducer} from 'react'
+import React, {useReducer} from 'react'
 import newsContext from './newsContext'
 import newsReducer from './newsReducer'
 import {GETNEWS, SETSEARCH} from './types'
@@ -22,50 +22,6 @@ const newsSearch = async (text) => {
     })
 }
 
-const newsSearchHealth = async (text) => {
-    const res = await axios.get(`${api}/top-headlines?category=health&q=${text}&pageSize=100&apiKey=77092229e2a6465daafadb1f1b3dafb7`)
-
-    dispatch({
-        type: GETNEWS,
-        payload: res.data.articles
-    })
-}
-
-const newsSearchBusiness = async (text) => {
-    const res = await axios.get(`${api}/top-headlines?category=business&q=${text}&pageSize=100&apiKey=77092229e2a6465daafadb1f1b3dafb7`)
-
-    dispatch({
-        type: GETNEWS,
-        payload: res.data.articles
-    })
-}
-
-const newsSearchEntairnment = async (text) => {
-    const res = await axios.get(`${api}/top-headlines?category=entertainment&q=${text}&pageSize=100&apiKey=77092229e2a6465daafadb1f1b3dafb7`)
-
-    dispatch({
-        type: GETNEWS,
-        payload: res.data.articles
-    })
-}
-
-const newsSearchGeneral = async (text) => {
-    const res = await axios.get(`${api}/top-headlines?category=general&q=${text}&pageSize=100&apiKey=77092229e2a6465daafadb1f1b3dafb7`)
-
-    dispatch({
-        type: GETNEWS,
-        payload: res.data.articles
-    })
-}
-
-const newsSearchScience = async (text) => {
-    const res = await axios.get(`${api}/top-headlines?category=general&q=${text}&pageSize=100&apiKey=77092229e2a6465daafadb1f1b3dafb7`)
-
-    dispatch({
-        type: GETNEWS,
-        payload: res.data.articles
-    })
-}
 
 const getNews = async () => {
 const res = await axios.get(`${api}/top-headlines?country=in&pageSize=100&apiKey=77092229e2a6465daafadb1f1b3dafb7`)
@@ -76,8 +32,10 @@ dispatch({
 })
 }
 
-const healthNews = async () => {
-    const res = await axios.get(`${api}/top-headlines?category=health&pageSize=100&apiKey=77092229e2a6465daafadb1f1b3dafb7`)
+
+
+const generalNews = async (type) => {
+    const res = await axios.get(`${api}/top-headlines?category=${type}&pageSize=100&apiKey=77092229e2a6465daafadb1f1b3dafb7`)
 
     dispatch({
         type: GETNEWS,
@@ -85,41 +43,7 @@ const healthNews = async () => {
     })
 }
 
-const businessNews = async () => {
-    const res = await axios.get(`${api}/top-headlines?category=business&pageSize=100&apiKey=77092229e2a6465daafadb1f1b3dafb7`)
 
-    dispatch({
-        type: GETNEWS,
-        payload: res.data.articles
-    })
-}
-
-const entertainmentNews = async () => {
-    const res = await axios.get(`${api}/top-headlines?category=entertainment&pageSize=100&apiKey=77092229e2a6465daafadb1f1b3dafb7`)
-
-    dispatch({
-        type: GETNEWS,
-        payload: res.data.articles
-    })
-}
-
-const generalNews = async () => {
-    const res = await axios.get(`${api}/top-headlines?category=general&pageSize=100&apiKey=77092229e2a6465daafadb1f1b3dafb7`)
-
-    dispatch({
-        type: GETNEWS,
-        payload: res.data.articles
-    })
-}
-
-const scienceNews = async () => {
-    const res = await axios.get(`${api}/top-headlines?category=science&pageSize=100&apiKey=77092229e2a6465daafadb1f1b3dafb7`)
-
-    dispatch({
-        type: GETNEWS,
-        payload: res.data.articles
-    })
-}
 
 return (
     <newsContext.Provider
@@ -128,18 +52,7 @@ return (
         search: state.search,
         getNews,
         newsSearch,
-        healthNews,
-        businessNews,
-        entertainmentNews,
-        newsSearchHealth,
-        newsSearchBusiness,
-        newsSearchEntairnment,
-        generalNews,
-        newsSearchGeneral,
-        scienceNews,
-        newsSearchScience
-        
-        
+        generalNews,        
     }} >
         {props.children}
     </newsContext.Provider>
